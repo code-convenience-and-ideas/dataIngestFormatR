@@ -1,0 +1,10 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  loading_yaml_data: loading_yaml_data.html
+last_built: 2023-12-10T12:10Z
+urls:
+  reference: https://code-convenience-and-ideas.github.io/packTemplate/reference
+  article: https://code-convenience-and-ideas.github.io/packTemplate/articles
+
