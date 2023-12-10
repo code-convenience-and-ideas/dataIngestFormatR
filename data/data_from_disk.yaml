@@ -1,0 +1,7 @@
+---
+block_type: "data_from_disk"
+default_data_path:
+datasets_to_load:
+    -   name: dataset_one
+        data_path: raw_data/my_data.parquet
+        data_output_format: parquet

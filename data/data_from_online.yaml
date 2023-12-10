@@ -1,0 +1,8 @@
+---
+block_type: "data_from_online"
+default_data_path:
+datasets_to_load:  # Reliant on you knowing appropriate file-type for your data. Will just stream to disk location you specify.
+    -   name: dataset_one
+        web_link: https://google.com/test.xlsx
+        data_path: raw_data
+        data_output_format: parquet

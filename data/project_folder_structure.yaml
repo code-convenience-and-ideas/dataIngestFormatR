@@ -1,0 +1,40 @@
+---
+# Specify a yaml example for defining a local projects folder structure
+block_type: "project_structure"
+Folders:  # Option for default_path here which will override project inference from code location
+    -   data:
+            name: data_dir
+            manual_data:
+                name: manual_data_dir
+            processed_data:
+                name: processed_data_dir
+            raw_data:
+                name: raw_data_dir
+            summaries_reports_synthesized_data:
+                name: summary_dir
+    -   scripts:
+            name: script_dir
+            r:
+                name: r_script_dir
+            python:
+                name: python_script_dir
+            sql:
+                name: sql_script_dir
+            other:
+                name: other_script_dir
+    -   models:
+            name: models_dir
+    -   communications:
+            name: communications_dir
+    -   other:
+            name: other_dir
+    -   documentation:
+            name: documentation_dir
+    -   figures:
+            name: figures_dir
+    -   logs:
+            name: logs_dir
+    -   reports:
+            name: reports_dir
+    -   apps:
+            name: apps_dir

@@ -1,0 +1,63 @@
+---
+title: "Templating"
+output: rmarkdown::html_vignette
+description: |
+    Templating is the a quick investigation of setting up templates.
+vignette: >
+  %\VignetteIndexEntry{Templating}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+When handling data-input for R and Python analyses, I have a few very common workflows.
+* Load data from a specific source as is:
+    * Could be from disk
+	* Could be from website / S3
+
+* Runs scripts in another environment (typical an SQL server of some kind) to produce data.
+    * I often cache these on disk then to avoid re-running the computing code
+
+I previously specified the file and data-paths individually in R and Python as needed but it made switching between the two
+slow, complicated and painful. It is easier to define a simple shared format and then define a package for each language that can parse it to the required
+format to successfully load the data.
+
+
+```{r setup}
+library(dataIngestFormatR)
+dataIngestFormatR::hello()  # Test no-action print function works for install and exports to all be working
+```
+
+We can then look at a few exmaple YAML files and how this package would parse them.
+
+Please note that the package does not itself load all of the data. That is handled separately. This package loads the information needed to inform loading the data.
+
+## YAML specifying loading from disk
+
+```{r disk_example}
+disk_yaml_snippet <- ""
+```
+
+## YAML specifying loading the data via running SQL and pulling data over an ODBC connection
+
+```{r sql_example}
+sql_yaml_snippet <- ""
+```
+
+## YAML - from website download
+```{r web_download}
+web_download_yaml_snippet <- ""
+```
+
+## YAML - from S3
+```{r s3_download}
+s3_download_yaml_snippet <- ""
+```

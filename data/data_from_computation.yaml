@@ -1,0 +1,31 @@
+---
+block_type: "remote_execution_data"
+default_script_path:
+default_data_path:
+default_engine_name: default_sql
+default_override_existing: No
+datasets_to_load:
+    -   name: dataset_one
+        script_path: sql/dataset_one.sql
+        script_type: sql
+        data_path: raw_data
+        data_output_format: parquet
+        engine_name: default
+        override_existing: No
+    -   name: dataset_two  # by default, if not specified, name is used to fill in any missing file names
+        script_path: sql/dataset_two.sql  # default_script_path will be added here to get full set But file name can be explicitly specified
+        script_type: sql
+        data_path: raw_data  # Similar for data, a default will be used, but, can be overwritten here.
+        data_output_format: parquet  # Only supporting parquet output at the moment, but, consider letting people do otherwise
+        engine_name: default
+        override_existing: No
+    -   name: dataset_three # Example to show default overrides work
+        script_path: C:/sql/dataset_two.sql  # But file name can be explicitly specified
+        script_type: sql
+        data_path: C:/other_random_spot/my_data.parquet  # Similar for data, a default will be used, but, can be overwritten here.
+        data_output_format: parquet  # Only supporting parquet output at the moment, but, consider letting people do otherwise
+    -   name: dataset_four # Example to show default overrides work
+        script_path: C:/sql/dataset_four.sql  # But file name can be explicitly specified
+        script_type: sql
+        data_path: raw_data/test_data.parquet  # Similar for data, a default will be used, but, can be overwritten here.
+        data_output_format: parquet  # Only supporting parquet output at the moment, but, consider letting people do otherwise

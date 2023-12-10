@@ -1,5 +1,5 @@
 Type: Package
-Package: packTemplate
+Package: dataIngestFormatR
 Title: A template used as a basis for developing R packages to my liking
 Version: 0.0.1
 Authors@R:
@@ -12,12 +12,15 @@ Description: There are a few choices and patterns to building an R
     formating and cleaning, building and including a vignette, a package
     logo and a package website that should work on github pages.
 License: MIT + file LICENSE
-URL: https://github.com/code-convenience-and-ideas/packTemplate,
-    https://code-convenience-and-ideas.github.io/packTemplate/
+URL: https://github.com/code-convenience-and-ideas/dataIngestFormatR,
+    https://code-convenience-and-ideas.github.io/dataIngestFormatR/
 BugReports:
-    https://github.com/code-convenience-and-ideas/packTemplate/issues
+    https://github.com/code-convenience-and-ideas/dataIngestFormatR/issues
 Imports:
     glue
+    yaml,
+    here,
+    R.utils
 Suggests:
     knitr (>= 1.42),
     lintr (>= 3.1.1),

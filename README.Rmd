@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# packTemplate
+# dataIngestFormatR
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/code-convenience-and-ideas/packTemplate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/code-convenience-and-ideas/packTemplate/actions/workflows/R-CMD-check.yaml)
@@ -21,15 +21,8 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of packTemplate is to build up an example of how I like to build and maintain R packages.
+The goal of dataIngestFormatR is to simply build up a few simple scripts that parse a shared YAML format I use to specify the datasets I need to load for my analyses.
 
-The hope is to integrate the various parts I'd like for ideally having a modern Continuous Integration, Continuous Development (CI/CD) approach to R code.
-To that end, I importantly aim to cover:
-* Github actions checking the package build
-* Automatic testing checks for the code with test packages and coverage checking
-* Git pre-commit operations to enforce consistent styles and formatting on the code
-* A nice, modern logging approach to
-* Automatic documentation and site building with example of vignettes, new, readmes and a package website.
 
 ## Installation
 
@@ -37,7 +30,7 @@ You can install the development version of packTemplate like so:
 
 ``` r
 # You can install thhis package directly from github
-devtools::install_github("https://github.com/code-convenience-and-ideas/packTemplate.git")
+devtools::install_github("https://github.com/code-convenience-and-ideas/dataIngestFormatR.git")
 ```
 
 ## Example
@@ -45,11 +38,10 @@ devtools::install_github("https://github.com/code-convenience-and-ideas/packTemp
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(packTemplate)
+library(dataIngestFormatR)
 
 ## basic example code
-packTemplate::hello()
-packTemplate::df_shape_log_message(cars)
+dataIngestFormatR::load_data_yaml(path_to_yaml)
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
