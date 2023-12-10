@@ -256,22 +256,6 @@ update_execution_list_of_datasets <- function(yaml_data_as_list){
     return(yaml_data_as_list)
 }
 
-#' Title
-#'
-#' @param yaml_data_as_list
-#'
-#' @return
-#' @export
-#'
-#' @examples
-prepare_execution_dataset_yaml <- function(yaml_data_as_list, default_path){
-
-    # Use execution data specific process for dataset list
-    yaml_data_as_list <- prepare_dataset_yaml(yaml_data_as_list, default_path, update_execution_list_of_datasets)
-
-    return(yaml_data_as_list)
-}
-
 ###########################
 # Data from disk yaml handling
 ###########################
@@ -310,21 +294,6 @@ update_disk_list_of_datasets <- function(yaml_data_as_list){
     return(yaml_data_as_list)
 }
 
-#' Title
-#'
-#' @param yaml_data_as_list
-#'
-#' @return
-#' @export
-#'
-#' @examples
-prepare_disk_dataset_yaml <- function(yaml_data_as_list, default_path){
-
-    # Use execution data specific process for dataset list
-    yaml_data_as_list <- prepare_dataset_yaml(yaml_data_as_list, default_path, update_disk_list_of_datasets)
-
-    return(yaml_data_as_list)
-}
 ###########################
 # Data from online yaml handling
 ###########################
@@ -374,22 +343,6 @@ update_online_list_of_datasets <- function(yaml_data_as_list){
     return(yaml_data_as_list)
 }
 
-#' Title
-#'
-#' @param yaml_data_as_list
-#'
-#' @return
-#' @export
-#'
-#' @examples
-prepare_online_dataset_yaml <- function(yaml_data_as_list, default_path){
-
-    # Use execution data specific process for dataset list
-    yaml_data_as_list <- prepare_dataset_yaml(yaml_data_as_list, default_path, update_online_list_of_datasets)
-
-    return(yaml_data_as_list)
-}
-
 ##############################
 # Main flow function
 ##############################
@@ -415,13 +368,13 @@ load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path){
         yaml_results <- prepare_folder_structure_yaml(yaml_data_as_list, default_path)
 
     } else if (current_yaml_block == "remote_execution_data"){
-        yaml_results <- prepare_execution_dataset_yaml(yaml_data_as_list, default_path)
+        yaml_results <- prepare_dataset_yaml(yaml_data_as_list, default_path, update_execution_list_of_datasets())
 
     } else if (current_yaml_block == "data_from_disk"){
-        yaml_results <- prepare_disk_dataset_yaml(yaml_data_as_list, default_path)
+        yaml_results <- prepare_dataset_yaml(yaml_data_as_list, default_path, update_disk_list_of_datasets)
 
     } else if (current_yaml_block == "data_from_online"){
-        yaml_results <- prepare_online_dataset_yaml(yaml_online_data, default_path)
+        yaml_results <- prepare_dataset_yaml(yaml_online_data, default_path, update_online_list_of_datasets)
 
     } else { # Shouldn't happen, if else blocks should cover all supports block types from my coed
 
@@ -430,26 +383,8 @@ load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path){
     return(yaml_results)
 }
 
-
-# Processed data equivalence checks
-processed_yaml_folder_data <- load_and_prepare_yaml_template(example_folder_yaml_path, here::here())
-processed_yaml_code_execution_data <- load_and_prepare_yaml_template(example_execution_yaml_path, here::here())
-processed_yaml_disk_data <- load_and_prepare_yaml_template(example_disk_yaml_path, here::here())
-processed_yaml_online_data <- load_and_prepare_yaml_template(example_online_yaml_path, here::here())
-
-# remote execution data handling
-yaml_code_execution_data <- yaml::read_yaml(example_execution_yaml_path)
-
-processed_yaml_code_execution_data <- prepare_execution_dataset_yaml(yaml_code_execution_data, here::here())
-
-# remote execution data handling
-yaml_disk_data <- yaml::read_yaml(example_disk_yaml_path)
-
-# Fix default path entries
-processed_yaml_disk_data <- prepare_disk_dataset_yaml(yaml_disk_data, here::here())
-
-# remote execution data handling
-yaml_online_data <- yaml::read_yaml(example_online_yaml_path)
-
-# Fix default path entries
-processed_yaml_online_data <- prepare_online_dataset_yaml(yaml_online_data, here::here())
+# # Processed data equivalence checks
+# processed_yaml_folder_data <- load_and_prepare_yaml_template(example_folder_yaml_path, here::here())
+# processed_yaml_code_execution_data <- load_and_prepare_yaml_template(example_execution_yaml_path, here::here())
+# processed_yaml_disk_data <- load_and_prepare_yaml_template(example_disk_yaml_path, here::here())
+# processed_yaml_online_data <- load_and_prepare_yaml_template(example_online_yaml_path, here::here())
