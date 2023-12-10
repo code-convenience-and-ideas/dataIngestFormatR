@@ -33,7 +33,7 @@ format to successfully load the data.
 
 ```{r setup}
 library(dataIngestFormatR)
-dataIngestFormatR::hello()  # Test no-action print function works for install and exports to all be working
+dataIngestFormatR::hello() # No-action print function to see if loaded
 ```
 
 We can then look at a few exmaple YAML files and how this package would parse them.
