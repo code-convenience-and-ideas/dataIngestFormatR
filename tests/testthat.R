@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(packTemplate)
+library(dataIngestFormatR)
 
-test_check("packTemplate")
+test_check("dataIngestFormatR")

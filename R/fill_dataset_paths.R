@@ -1,5 +1,5 @@
-#' @import assertthat
 #' @import R.utils
+#' @import stringr
 NULL
 
 #' Appends default file path to entry if its not already an absolute path
