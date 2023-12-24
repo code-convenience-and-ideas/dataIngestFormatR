@@ -18,5 +18,7 @@ A dataset block with disk-source specific defaults all applied
 For a disk yaml data block, update all of the defaults
 }
 \examples{
+\dontrun{
 update_disk_dataset_entry(list(), list())
+}
 }

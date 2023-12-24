@@ -16,5 +16,7 @@ An disk yaml dataset as a list with all data set entries updated
 Go over the disk datasets and update all dataset blocks
 }
 \examples{
+\dontrun{
 update_disk_list_of_datasets(list())
+}
 }

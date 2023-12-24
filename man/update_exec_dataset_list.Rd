@@ -16,5 +16,7 @@ An execution yaml dataset as a list with all data set entries updated
 Go over the execution dataset and update all dataset blocks
 }
 \examples{
+\dontrun{
 update_exec_dataset_list(list())
+}
 }

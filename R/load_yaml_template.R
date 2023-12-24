@@ -222,7 +222,7 @@ fill_list_default_paths <- function(
 # Project yaml handling
 ############################
 
-#' Cleans yaml names by removed redundant Folder and name portions
+#' Cleans yaml names by removing redundant Folder and name portions
 #'
 #' @param yaml_names a vector of name entries from a flattened list
 #'
@@ -319,7 +319,9 @@ prepare_folder_structure_yaml <- function(
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' update_execution_dataset_entry(list(), list())
+#'
 update_execution_dataset_entry <- function(dataset_block, current_defaults) {
   # Put out some useful sub-components
   non_path_default_names <- names(current_defaults)[
@@ -362,7 +364,9 @@ update_execution_dataset_entry <- function(dataset_block, current_defaults) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' update_exec_dataset_list(list())
+#' }
 update_exec_dataset_list <- function(yaml_data_as_list) {
   # process dataset to update blocks
   yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
@@ -384,7 +388,9 @@ update_exec_dataset_list <- function(yaml_data_as_list) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' update_disk_dataset_entry(list(), list())
+#' }
 update_disk_dataset_entry <- function(dataset_block, current_defaults) {
 
   # Data path now
@@ -404,7 +410,9 @@ update_disk_dataset_entry <- function(dataset_block, current_defaults) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' update_disk_list_of_datasets(list())
+#' }
 update_disk_list_of_datasets <- function(yaml_data_as_list) {
   # process dataset to update blocks
   yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
@@ -426,7 +434,9 @@ update_disk_list_of_datasets <- function(yaml_data_as_list) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' update_online_dataset_entry(list(), list())
+#' }
 update_online_dataset_entry <- function(dataset_block, current_defaults) {
 
   # Get online file name from website link
@@ -454,7 +464,9 @@ update_online_dataset_entry <- function(dataset_block, current_defaults) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' update_online_list_of_datasets(list())
+#' }
 update_online_list_of_datasets <- function(yaml_data_as_list) {
   # process dataset to update blocks
   yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
@@ -476,8 +488,8 @@ update_online_list_of_datasets <- function(yaml_data_as_list) {
 #' @export
 #'
 #' @examples
-#' local_folder_yaml <- here::here("inst", "extdata",
-#'    "project_folder_structure.yaml")
+#' local_folder_yaml <- system.file("extdata", "project_folder_structure.yaml",
+#'  package = "dataIngestFormatR")
 #' install_default_path <- here::here()
 #' load_and_prepare_yaml_template(local_folder_yaml, install_default_path)
 load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path) {

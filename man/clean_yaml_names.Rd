@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{clean_yaml_names}
 \alias{clean_yaml_names}
-\title{Cleans yaml names by removed redundant Folder and name portions}
+\title{Cleans yaml names by removing redundant Folder and name portions}
 \usage{
 clean_yaml_names(yaml_names)
 }
@@ -13,7 +13,7 @@ clean_yaml_names(yaml_names)
 Names cleaned to remove uninformative portions of flattened names
 }
 \description{
-Cleans yaml names by removed redundant Folder and name portions
+Cleans yaml names by removing redundant Folder and name portions
 }
 \examples{
 clean_yaml_names(c("Folders.other.name", "Folders.logs.name"))

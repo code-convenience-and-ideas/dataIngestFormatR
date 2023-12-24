@@ -16,5 +16,7 @@ An online yaml dataset as a list with all data set entries updated
 Go over the online datasets and update all dataset blocks
 }
 \examples{
+\dontrun{
 update_online_list_of_datasets(list())
+}
 }

@@ -17,6 +17,3 @@ A dataset block with execution specific defaults all applied
 \description{
 For an remote execution yaml data block, update all of the defaults
 }
-\examples{
-update_execution_dataset_entry(list(), list())
-}

@@ -18,8 +18,8 @@ a fulled prepared yaml dataset
 Prepares template yaml block by identifying which is relevant and processing
 }
 \examples{
-local_folder_yaml <- here::here("inst", "extdata",
-   "project_folder_structure.yaml")
+local_folder_yaml <- system.file("extdata", "project_folder_structure.yaml",
+ package = "dataIngestFormatR")
 install_default_path <- here::here()
 load_and_prepare_yaml_template(local_folder_yaml, install_default_path)
 }

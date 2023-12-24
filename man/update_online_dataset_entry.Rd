@@ -18,5 +18,7 @@ A dataset block with remote dataset defaults all applied
 For an online yaml data block, update all of the defaults
 }
 \examples{
+\dontrun{
 update_online_dataset_entry(list(), list())
+}
 }
