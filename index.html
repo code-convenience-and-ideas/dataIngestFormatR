@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="index.html">dataIngestFormatR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,39 +77,95 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="packtemplate">packTemplate<a class="anchor" aria-label="anchor" href="#packtemplate"></a>
+<div class="page-header"><h1 id="dataingestformatr">dataIngestFormatR<a class="anchor" aria-label="anchor" href="#dataingestformatr"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of packTemplate is to build up an example of how I like to build and maintain R packages.</p>
-<p>The hope is to integrate the various parts I’d like for ideally having a modern Continuous Integration, Continuous Development (CI/CD) approach to R code. To that end, I importantly aim to cover: * Github actions checking the package build * Automatic testing checks for the code with test packages and coverage checking * Git pre-commit operations to enforce consistent styles and formatting on the code * A nice, modern logging approach to * Automatic documentation and site building with example of vignettes, new, readmes and a package website.</p>
+<p>The goal of dataIngestFormatR is to simply build up a few simple scripts that parse a shared YAML format I use to specify the datasets I need to load for my analyses.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of packTemplate like so:</p>
+<p>You can install the development version of dataIngestFormatR like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># You can install thhis package directly from github</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"https://github.com/code-convenience-and-ideas/packTemplate.git"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"https://github.com/code-convenience-and-ideas/dataIngestFormatR.git"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">packTemplate</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/code-convenience-and-ideas/dataIngestFormatR" class="external-link">dataIngestFormatR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## basic example code</span></span>
-<span><span class="fu">packTemplate</span><span class="fu">::</span><span class="fu">hello</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Hello, world!"</span></span></code></pre></div>
+<span><span class="va">local_folder_yaml</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"project_folder_structure.yaml"</span>,</span>
+<span>                                 package <span class="op">=</span> <span class="st">"dataIngestFormatR"</span></span>
+<span>                                 <span class="op">)</span></span>
+<span><span class="va">local_default_folder</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">dataIngestFormatR</span><span class="fu">::</span><span class="fu"><a href="reference/load_and_prepare_yaml_template.html">load_and_prepare_yaml_template</a></span><span class="op">(</span><span class="va">local_folder_yaml</span>,</span>
+<span>                                                  <span class="va">local_default_folder</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $data_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/data"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $manual_data_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/data/manual_data"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $processed_data_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/data/processed_data"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $raw_data_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/data/raw_data"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $summary_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/data/summaries_reports_synthesized_data"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $script_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/scripts"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $r_script_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/scripts/r"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $python_script_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/scripts/python"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $sql_script_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/scripts/sql"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $other_script_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/scripts/other"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $models_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/models"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $communications_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/communications"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $other_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/other"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $documentation_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/documentation"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $figures_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/figures"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $logs_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/logs"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $reports_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/reports"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; $apps_dir</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/Alex/Google Drive/projects/r_convenience_packages/dataIngestFormatR/apps"</span></span></code></pre></div>
 <p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      speed           dist       </span></span>
-<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">#&gt;  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
+<span><span class="co">#&gt;      speed           dist</span></span>
+<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00</span></span>
+<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00</span></span>
+<span><span class="co">#&gt;  Median :15.0   Median : 36.00</span></span>
+<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98</span></span>
+<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00</span></span>
 <span><span class="co">#&gt;  Max.   :25.0   Max.   :120.00</span></span></code></pre></div>
 <p>You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date. <code>devtools::build_readme()</code> is handy for this.</p>
 <p>You can also embed plots, for example:</p>
@@ -151,8 +207,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/code-convenience-and-ideas/packTemplate/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/code-convenience-and-ideas/packTemplate/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/code-convenience-and-ideas/packTemplate?branch=main" class="external-link"><img src="https://codecov.io/gh/code-convenience-and-ideas/packTemplate/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/code-convenience-and-ideas/dataIngestFormatR/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/code-convenience-and-ideas/dataIngestFormatR/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/code-convenience-and-ideas/dataIngestFormatR?branch=main" class="external-link"><img src="https://codecov.io/gh/code-convenience-and-ideas/dataIngestFormatR/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
 
