@@ -2,13 +2,23 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{prepare_dataset_yaml}
 \alias{prepare_dataset_yaml}
-\title{Title}
+\title{Updates default paths for the yaml data block}
 \usage{
 prepare_dataset_yaml(yaml_data_as_list, default_path, dataset_list_updater)
 }
 \arguments{
 \item{yaml_data_as_list}{yaml document loaded as a nested list}
+
+\item{default_path}{default path local to use to append to entries}
+
+\item{dataset_list_updater}{function to update a list of datasets}
+}
+\value{
+yaml data block with default paths filled in and appropriate names
 }
 \description{
-Title
+Updates default paths for the yaml data block
+}
+\examples{
+prepare_dataset_yaml(list(), here::here(), function(x) x)
 }

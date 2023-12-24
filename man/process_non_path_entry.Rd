@@ -2,13 +2,23 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{process_non_path_entry}
 \alias{process_non_path_entry}
-\title{Title}
+\title{Takes a non-path entry and applies the ovverides}
 \usage{
 process_non_path_entry(entry_name, default_value, dataset_block)
 }
 \arguments{
-\item{dataset_block}{}
+\item{entry_name}{name of the entry being parsed}
+
+\item{default_value}{the default value to use if the entry is missing}
+
+\item{dataset_block}{the list containing the entries to be updated}
+}
+\value{
+a new list with updated fields
 }
 \description{
-Title
+Takes a non-path entry and applies the ovverides
+}
+\examples{
+process_non_path_entry("default_test", 0, list())
 }

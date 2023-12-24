@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{update_data_path_with_name}
 \alias{update_data_path_with_name}
-\title{Title}
+\title{Uses standard names to update path to a data depending on default options}
 \usage{
 update_data_path_with_name(
   path_to_data,
@@ -12,8 +12,20 @@ update_data_path_with_name(
 )
 }
 \arguments{
-\item{data_file_type}{}
+\item{path_to_data}{path to the expected dataset}
+
+\item{default_data_path}{A default file path to use for dataset location}
+
+\item{file_name}{the name of the file being considered}
+
+\item{data_file_type}{the default file type to use if missing an extension}
+}
+\value{
+an absolute path to for a data file
 }
 \description{
-Title
+Uses standard names to update path to a data depending on default options
+}
+\examples{
+update_data_path_with_name("./test_data.sql", "./data", "test_data", "parquet")
 }

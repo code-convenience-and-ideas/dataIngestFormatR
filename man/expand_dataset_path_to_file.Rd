@@ -9,7 +9,7 @@ expand_dataset_path_to_file(current_file_entry, default_path)
 \arguments{
 \item{current_file_entry}{path to expected file location}
 
-\item{default_to_consider}{the default path context for the current entry}
+\item{default_path}{the default path context for the current entry}
 }
 \value{
 an absolute path to the file as a string

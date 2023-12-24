@@ -15,3 +15,6 @@ string of matched default field name
 \description{
 Adds default indicator to non default field name
 }
+\examples{
+get_default_entry_name(c("test", "example"))
+}

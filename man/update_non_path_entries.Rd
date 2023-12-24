@@ -2,13 +2,22 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{update_non_path_entries}
 \alias{update_non_path_entries}
-\title{Title}
+\title{Updates a non-path entry to right value}
 \usage{
 update_non_path_entries(non_path_default_names, dataset_block)
 }
 \arguments{
-\item{dataset_block}{}
+\item{non_path_default_names}{names of default entries which aren't paths}
+
+\item{dataset_block}{list capturing entries for dataset}
+}
+\value{
+block of parameters for a dataset with updated values
 }
 \description{
-Title
+Updates a non-path entry to right value
+}
+\examples{
+update_non_path_entries(c("", ""),
+list())
 }

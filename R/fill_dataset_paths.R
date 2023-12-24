@@ -5,7 +5,7 @@ NULL
 #' Appends default file path to entry if its not already an absolute path
 #'
 #' @param current_file_entry path to expected file location
-#' @param default_to_consider the default path context for the current entry
+#' @param default_path the default path context for the current entry
 #'
 #' @return an absolute path to the file as a string
 #' @export

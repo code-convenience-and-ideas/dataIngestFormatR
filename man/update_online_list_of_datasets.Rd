@@ -2,13 +2,19 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{update_online_list_of_datasets}
 \alias{update_online_list_of_datasets}
-\title{Title}
+\title{Go over the online datasets and update all dataset blocks}
 \usage{
 update_online_list_of_datasets(yaml_data_as_list)
 }
 \arguments{
 \item{yaml_data_as_list}{yaml document loaded as a nested list}
 }
+\value{
+An online yaml dataset as a list with all data set entries updated
+}
 \description{
-Title
+Go over the online datasets and update all dataset blocks
+}
+\examples{
+update_online_list_of_datasets(list())
 }

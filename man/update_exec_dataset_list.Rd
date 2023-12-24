@@ -2,13 +2,19 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{update_exec_dataset_list}
 \alias{update_exec_dataset_list}
-\title{Title}
+\title{Go over the execution dataset and update all dataset blocks}
 \usage{
 update_exec_dataset_list(yaml_data_as_list)
 }
 \arguments{
 \item{yaml_data_as_list}{yaml document loaded as a nested list}
 }
+\value{
+An execution yaml dataset as a list with all data set entries updated
+}
 \description{
-Title
+Go over the execution dataset and update all dataset blocks
+}
+\examples{
+update_exec_dataset_list(list())
 }

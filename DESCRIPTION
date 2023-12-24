@@ -21,6 +21,7 @@ Imports:
     here,
     R.utils,
     rlist,
+    stats,
     stringr,
     yaml
 Suggests:

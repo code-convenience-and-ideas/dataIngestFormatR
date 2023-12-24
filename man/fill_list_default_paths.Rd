@@ -2,15 +2,21 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{fill_list_default_paths}
 \alias{fill_list_default_paths}
-\title{Title}
+\title{fill in all of the default path entries to fix a dataset}
 \usage{
 fill_list_default_paths(yaml_data_as_list, default_path_to_consider)
 }
 \arguments{
 \item{yaml_data_as_list}{yaml document loaded as a nested list}
 
-\item{default_path_to_consider}{}
+\item{default_path_to_consider}{the default location path to consider}
+}
+\value{
+yaml data with paths fixed to add the default where relevant
 }
 \description{
-Title
+fill in all of the default path entries to fix a dataset
+}
+\examples{
+fill_list_default_paths(list(), ".")
 }

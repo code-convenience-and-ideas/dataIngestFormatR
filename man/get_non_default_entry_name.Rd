@@ -15,3 +15,6 @@ string of matched non-default field name
 \description{
 Removed default indicator from default field name
 }
+\examples{
+get_non_default_entry_name(c("default_test", "default_example"))
+}

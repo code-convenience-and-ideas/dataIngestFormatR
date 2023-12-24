@@ -8,6 +8,11 @@ load_and_prepare_yaml_template(path_to_yaml_file, default_path)
 }
 \arguments{
 \item{path_to_yaml_file}{string with path to yaml file}
+
+\item{default_path}{an overall default path to use}
+}
+\value{
+a fulled prepared yaml dataset
 }
 \description{
 Prepares template yaml block by identifying which is relevant and processing

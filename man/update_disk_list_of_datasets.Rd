@@ -2,13 +2,19 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{update_disk_list_of_datasets}
 \alias{update_disk_list_of_datasets}
-\title{Title}
+\title{Go over the disk datasets and update all dataset blocks}
 \usage{
 update_disk_list_of_datasets(yaml_data_as_list)
 }
 \arguments{
 \item{yaml_data_as_list}{yaml document loaded as a nested list}
 }
+\value{
+An disk yaml dataset as a list with all data set entries updated
+}
 \description{
-Title
+Go over the disk datasets and update all dataset blocks
+}
+\examples{
+update_disk_list_of_datasets(list())
 }

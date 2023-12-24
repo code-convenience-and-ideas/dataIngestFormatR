@@ -14,6 +14,7 @@ NULL
 #' @export
 #'
 #' @examples
+#' get_non_default_entry_name(c("default_test", "default_example"))
 get_non_default_entry_name <- function(default_field_name) {
   return(stringr::str_replace(default_field_name, "^default_", ""))
 }
@@ -26,19 +27,22 @@ get_non_default_entry_name <- function(default_field_name) {
 #' @export
 #'
 #' @examples
+#' get_default_entry_name(c("test", "example"))
 get_default_entry_name <- function(non_default_field_name) {
   return(paste0("default_", non_default_field_name))
 }
 
-#' Title
+#' Updates a non-path entry to right value
 #'
-#' @param non_path_default_names
-#' @param dataset_block
+#' @param non_path_default_names names of default entries which aren't paths
+#' @param dataset_block list capturing entries for dataset
 #'
-#' @return
+#' @return block of parameters for a dataset with updated values
 #' @export
 #'
 #' @examples
+#' update_non_path_entries(c("", ""),
+#' list())
 update_non_path_entries <- function(non_path_default_names, dataset_block) {
   # NB, inefficient but data is small
   # No reasons to think config will get massive
@@ -54,16 +58,17 @@ update_non_path_entries <- function(non_path_default_names, dataset_block) {
   return(dataset_block)
 }
 
-#' Title
+#' Takes a non-path entry and applies the ovverides
 #'
-#' @param entry_name
-#' @param default_value
-#' @param dataset_block
+#' @param entry_name name of the entry being parsed
+#' @param default_value the default value to use if the entry is missing
+#' @param dataset_block the list containing the entries to be updated
 #'
-#' @return
+#' @return a new list with updated fields
 #' @export
 #'
 #' @examples
+#' process_non_path_entry("default_test", 0, list())
 process_non_path_entry <- function(entry_name, default_value, dataset_block) {
   # Prepare some variables
   current_block_entries <- names(dataset_block)
@@ -82,14 +87,17 @@ process_non_path_entry <- function(entry_name, default_value, dataset_block) {
   return(dataset_block)
 }
 
-#' Title
+#' Updates default paths for the yaml data block
 #'
 #' @param yaml_data_as_list yaml document loaded as a nested list
+#' @param default_path default path local to use to append to entries
+#' @param dataset_list_updater function to update a list of datasets
 #'
-#' @return
+#' @return yaml data block with default paths filled in and appropriate names
 #' @export
 #'
 #' @examples
+#' prepare_dataset_yaml(list(), here::here(), function(x) x)
 prepare_dataset_yaml <- function(yaml_data_as_list, default_path,
                                  dataset_list_updater) {
   # Add default paths first
@@ -108,14 +116,16 @@ prepare_dataset_yaml <- function(yaml_data_as_list, default_path,
   return(yaml_data_as_list)
 }
 
-#' Title
+#' Updates entries for every dataset in the yaml list
 #'
 #' @param yaml_data_as_list yaml document loaded as a nested list
+#' @param individual_dataset_processor a function to update a dataset block
 #'
-#' @return
+#' @return a yaml datalist with updated measures
 #' @export
 #'
 #' @examples
+#' update_list_of_datasets(list(), function(x) x)
 update_list_of_datasets <- function(yaml_data_as_list,
                                     individual_dataset_processor) {
   # unpack a few components
@@ -140,17 +150,18 @@ update_list_of_datasets <- function(yaml_data_as_list,
   return(yaml_data_as_list)
 }
 
-#' Title
+#' Uses standard names to update path to a data depending on default options
 #'
-#' @param path_to_data
-#' @param default_data_path
-#' @param script_file_name
-#' @param data_file_type
+#' @param path_to_data path to the expected dataset
+#' @param default_data_path A default file path to use for dataset location
+#' @param file_name the name of the file being considered
+#' @param data_file_type the default file type to use if missing an extension
 #'
-#' @return
+#' @return an absolute path to for a data file
 #' @export
 #'
 #' @examples
+#' update_data_path_with_name("./test_data.sql", "./data", "test_data", "parquet")
 update_data_path_with_name <- function(path_to_data,
                                        default_data_path,
                                        file_name,
@@ -181,17 +192,16 @@ collapsing_file_path <- function(vector_of_path_components) {
   return(new_combined_file_path)
 }
 
-
-
-#' Title
+#' fill in all of the default path entries to fix a dataset
 #'
 #' @param yaml_data_as_list yaml document loaded as a nested list
-#' @param default_path_to_consider
+#' @param default_path_to_consider the default location path to consider
 #'
-#' @return
+#' @return yaml data with paths fixed to add the default where relevant
 #' @export
 #'
 #' @examples
+#' fill_list_default_paths(list(), ".")
 fill_list_default_paths <- function(
     yaml_data_as_list,
     default_path_to_consider) {
@@ -264,15 +274,16 @@ prepare_folder_structure_yaml <- function(
 ###################################
 # Remote execution yaml handling
 ###################################
-#' Title
+#' For an remote execution yaml data block, update all of the defaults
 #'
-#' @param dataset_block
-#' @param current_defaults
+#' @param dataset_block a block of data for execution datasets
+#' @param current_defaults a block of default options for entries
 #'
-#' @return
+#' @return A dataset block with execution specific defaults all applied
 #' @export
 #'
 #' @examples
+#' update_execution_dataset_entry(list(), list())
 update_execution_dataset_entry <- function(dataset_block, current_defaults) {
   # Put out some useful sub-components
   non_path_default_names <- names(current_defaults)[
@@ -285,7 +296,7 @@ update_execution_dataset_entry <- function(dataset_block, current_defaults) {
     current_defaults$default_script_path
   )
 
-  script_file_basename <- basename(current_dataset[["script_path"]])
+  script_file_basename <- basename(dataset_block[["script_path"]])
 
   # Data path now
   dataset_block[["data_path"]] <- update_data_path_with_name(
@@ -299,7 +310,7 @@ update_execution_dataset_entry <- function(dataset_block, current_defaults) {
   for (non_path_default_name in non_path_default_names) {
     dataset_block <- process_non_path_entry(
       non_path_default_name,
-      yaml_default_entries[[non_path_default_name]],
+      current_defaults[[non_path_default_name]],
       dataset_block
     )
   }
@@ -307,14 +318,15 @@ update_execution_dataset_entry <- function(dataset_block, current_defaults) {
   return(dataset_block)
 }
 
-#' Title
+#' Go over the execution dataset and update all dataset blocks
 #'
 #' @param yaml_data_as_list yaml document loaded as a nested list
 #'
-#' @return
+#' @return An execution yaml dataset as a list with all data set entries updated
 #' @export
 #'
 #' @examples
+#' update_exec_dataset_list(list())
 update_exec_dataset_list <- function(yaml_data_as_list) {
   # process dataset to update blocks
   yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
@@ -327,15 +339,16 @@ update_exec_dataset_list <- function(yaml_data_as_list) {
 ###########################
 # Data from disk yaml handling
 ###########################
-#' Title
+#' For a disk yaml data block, update all of the defaults
 #'
-#' @param dataset_block
-#' @param current_defaults
+#' @param dataset_block a block of data for disk datasets
+#' @param current_defaults a block of default options for entries
 #'
-#' @return
+#' @return A dataset block with disk-source specific defaults all applied
 #' @export
 #'
 #' @examples
+#' update_disk_dataset_entry(list(), list())
 update_disk_dataset_entry <- function(dataset_block, current_defaults) {
 
   # Data path now
@@ -347,14 +360,15 @@ update_disk_dataset_entry <- function(dataset_block, current_defaults) {
   return(dataset_block)
 }
 
-#' Title
+#' Go over the disk datasets and update all dataset blocks
 #'
 #' @param yaml_data_as_list yaml document loaded as a nested list
 #'
-#' @return
+#' @return An disk yaml dataset as a list with all data set entries updated
 #' @export
 #'
 #' @examples
+#' update_disk_list_of_datasets(list())
 update_disk_list_of_datasets <- function(yaml_data_as_list) {
   # process dataset to update blocks
   yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
@@ -367,15 +381,16 @@ update_disk_list_of_datasets <- function(yaml_data_as_list) {
 ###########################
 # Data from online yaml handling
 ###########################
-#' Title
+#' For an online yaml data block, update all of the defaults
 #'
-#' @param dataset_block
-#' @param current_defaults
+#' @param dataset_block a block of data for online datasets
+#' @param current_defaults a block of default options for entries
 #'
-#' @return
+#' @return A dataset block with remote dataset defaults all applied
 #' @export
 #'
 #' @examples
+#' update_online_dataset_entry(list(), list())
 update_online_dataset_entry <- function(dataset_block, current_defaults) {
 
   # Get online file name from website link
@@ -395,14 +410,15 @@ update_online_dataset_entry <- function(dataset_block, current_defaults) {
   return(dataset_block)
 }
 
-#' Title
+#' Go over the online datasets and update all dataset blocks
 #'
 #' @param yaml_data_as_list yaml document loaded as a nested list
 #'
-#' @return
+#' @return An online yaml dataset as a list with all data set entries updated
 #' @export
 #'
 #' @examples
+#' update_online_list_of_datasets(list())
 update_online_list_of_datasets <- function(yaml_data_as_list) {
   # process dataset to update blocks
   yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
@@ -418,8 +434,9 @@ update_online_list_of_datasets <- function(yaml_data_as_list) {
 #' Prepares template yaml block by identifying which is relevant and processing
 #'
 #' @param path_to_yaml_file string with path to yaml file
+#' @param default_path an overall default path to use
 #'
-#' @return
+#' @return a fulled prepared yaml dataset
 #' @export
 #'
 #' @examples
@@ -430,7 +447,7 @@ load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path) {
   yaml_data_as_list <- yaml::read_yaml(path_to_yaml_file)
 
   # block type is my key identifier for the yaml types
-  current_yaml_block <- yaml_folder_data$block_type
+  current_yaml_block <- yaml_data_as_list$block_type
 
   # Switch through and pick the appropriate processor for the data
   if (current_yaml_block == "project_structure") {
@@ -439,13 +456,13 @@ load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path) {
   } else if (current_yaml_block == "remote_execution_data") {
     yaml_results <- prepare_dataset_yaml(yaml_data_as_list,
                                          default_path,
-                                         update_exec_dataset_list())
+                                         update_exec_dataset_list)
   } else if (current_yaml_block == "data_from_disk") {
     yaml_results <- prepare_dataset_yaml(yaml_data_as_list,
                                          default_path,
                                          update_disk_list_of_datasets)
   } else if (current_yaml_block == "data_from_online") {
-    yaml_results <- prepare_dataset_yaml(yaml_online_data,
+    yaml_results <- prepare_dataset_yaml(yaml_data_as_list,
                                          default_path,
                                          update_online_list_of_datasets)
   } else {

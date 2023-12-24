@@ -2,13 +2,21 @@
 % Please edit documentation in R/load_yaml_template.R
 \name{update_list_of_datasets}
 \alias{update_list_of_datasets}
-\title{Title}
+\title{Updates entries for every dataset in the yaml list}
 \usage{
 update_list_of_datasets(yaml_data_as_list, individual_dataset_processor)
 }
 \arguments{
 \item{yaml_data_as_list}{yaml document loaded as a nested list}
+
+\item{individual_dataset_processor}{a function to update a dataset block}
+}
+\value{
+a yaml datalist with updated measures
 }
 \description{
-Title
+Updates entries for every dataset in the yaml list
+}
+\examples{
+update_list_of_datasets(list(), function(x) x)
 }
