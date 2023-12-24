@@ -1,7 +1,7 @@
 Type: Package
 Package: dataIngestFormatR
 Title: A template used as a basis for developing R packages to my liking
-Version: 0.0.1
+Version: 0.1.0
 Authors@R:
     person("Alex", "Baker", , "alexbakercreates@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0004-2844-9720"))
