@@ -20,5 +20,5 @@ a new list with updated fields
 Takes a non-path entry and applies the ovverides
 }
 \examples{
-process_non_path_entry("default_test", 0, list())
+process_non_path_entry("default_engine_name", "default", list())
 }

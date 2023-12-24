@@ -16,7 +16,7 @@ vector of names for each entry in the list
 Loops over a list to get a vector of name entries
 }
 \examples{
-get_entry_names_from_name_field(list(
+get_entry_names_from_field(list(
   list("name" = "a"),
   list("name" = "b")
 ))

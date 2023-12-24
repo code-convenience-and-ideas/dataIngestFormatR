@@ -12,7 +12,7 @@ update_data_path_with_name(
 )
 }
 \arguments{
-\item{path_to_data}{path to the expected dataset}
+\item{path_to_data}{path to the expected data folder}
 
 \item{default_data_path}{A default file path to use for dataset location}
 
@@ -27,5 +27,5 @@ an absolute path to for a data file
 Uses standard names to update path to a data depending on default options
 }
 \examples{
-update_data_path_with_name("./test_data.sql", "./data", "test_data", "parquet")
+update_data_path_with_name("raw_data", "./data", "test_data.sql", "parquet")
 }

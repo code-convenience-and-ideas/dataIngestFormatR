@@ -20,5 +20,15 @@ yaml data block with default paths filled in and appropriate names
 Updates default paths for the yaml data block
 }
 \examples{
-prepare_dataset_yaml(list(), here::here(), function(x) x)
+# Simple example with a small, generic, yaml dataset
+default_path <- file.path("C:", "test")
+simple_data_update <- function(x) {x$test <- "value"; return(x)}
+test_yaml <- list(
+  "default_script_path" = NULL,
+  "datasets_to_load" = list(
+    list("name" = "dataset_one"),
+    list("name" = "dataset_two")
+  )
+ )
+prepare_dataset_yaml(test_yaml, default_path, simple_data_update)
 }

@@ -7,7 +7,7 @@
 collapsing_file_path(vector_of_path_components)
 }
 \arguments{
-\item{vector_of_path_components}{}
+\item{vector_of_path_components}{vector where each entry is part of path}
 }
 \value{
 string of completed file path

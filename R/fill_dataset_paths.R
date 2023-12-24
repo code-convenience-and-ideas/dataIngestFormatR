@@ -82,7 +82,7 @@ replace_file_extension <- function(file_path, new_extension) {
 #' @export
 #'
 #' @examples
-#' get_entry_names_from_name_field(list(
+#' get_entry_names_from_field(list(
 #'   list("name" = "a"),
 #'   list("name" = "b")
 #' ))

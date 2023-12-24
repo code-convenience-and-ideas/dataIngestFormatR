@@ -1,3 +1,6 @@
+#' @import stats
+NULL
+
 #' Creates a log of dataframe shape, and entry missingness
 #'
 #' @param data_to_log dataset to create a log message from

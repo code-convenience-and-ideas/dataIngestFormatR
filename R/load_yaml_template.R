@@ -1,6 +1,7 @@
 #' @import stringr
 #' @import R.utils
 #' @import rlist
+#' @import here
 NULL
 
 ###################################
@@ -32,32 +33,6 @@ get_default_entry_name <- function(non_default_field_name) {
   return(paste0("default_", non_default_field_name))
 }
 
-#' Updates a non-path entry to right value
-#'
-#' @param non_path_default_names names of default entries which aren't paths
-#' @param dataset_block list capturing entries for dataset
-#'
-#' @return block of parameters for a dataset with updated values
-#' @export
-#'
-#' @examples
-#' update_non_path_entries(c("", ""),
-#' list())
-update_non_path_entries <- function(non_path_default_names, dataset_block) {
-  # NB, inefficient but data is small
-  # No reasons to think config will get massive
-  # Data in R copied for function input. No references
-  for (non_path_default_name in non_path_default_names) {
-    dataset_block <- process_non_path_entry(
-      non_path_default_name,
-      dataset_block[[non_path_default_name]],
-      process_non_path_entry
-    )
-  }
-
-  return(dataset_block)
-}
-
 #' Takes a non-path entry and applies the ovverides
 #'
 #' @param entry_name name of the entry being parsed
@@ -68,7 +43,7 @@ update_non_path_entries <- function(non_path_default_names, dataset_block) {
 #' @export
 #'
 #' @examples
-#' process_non_path_entry("default_test", 0, list())
+#' process_non_path_entry("default_engine_name", "default", list())
 process_non_path_entry <- function(entry_name, default_value, dataset_block) {
   # Prepare some variables
   current_block_entries <- names(dataset_block)
@@ -97,8 +72,19 @@ process_non_path_entry <- function(entry_name, default_value, dataset_block) {
 #' @export
 #'
 #' @examples
-#' prepare_dataset_yaml(list(), here::here(), function(x) x)
-prepare_dataset_yaml <- function(yaml_data_as_list, default_path,
+#' # Simple example with a small, generic, yaml dataset
+#' default_path <- file.path("C:", "test")
+#' simple_data_update <- function(x) {x$test <- "value"; return(x)}
+#' test_yaml <- list(
+#'   "default_script_path" = NULL,
+#'   "datasets_to_load" = list(
+#'     list("name" = "dataset_one"),
+#'     list("name" = "dataset_two")
+#'   )
+#'  )
+#' prepare_dataset_yaml(test_yaml, default_path, simple_data_update)
+prepare_dataset_yaml <- function(yaml_data_as_list,
+                                 default_path,
                                  dataset_list_updater) {
   # Add default paths first
   # Pull out default paths for this block and override if value is missing
@@ -125,7 +111,18 @@ prepare_dataset_yaml <- function(yaml_data_as_list, default_path,
 #' @export
 #'
 #' @examples
-#' update_list_of_datasets(list(), function(x) x)
+#' simple_data_update <- function(dataset_block, dataset_defaults) {
+#'   dataset_block$default <- "test_value"
+#'   return(dataset_block)
+#' }
+#' test_yaml <- list(
+#'   "default_script_path" = ".",
+#'   "datasets_to_load" = list(
+#'     list("name" = "dataset_one"),
+#'     list("name" = "dataset_two")
+#'   )
+#'  )
+#' update_list_of_datasets(test_yaml, simple_data_update)
 update_list_of_datasets <- function(yaml_data_as_list,
                                     individual_dataset_processor) {
   # unpack a few components
@@ -152,7 +149,7 @@ update_list_of_datasets <- function(yaml_data_as_list,
 
 #' Uses standard names to update path to a data depending on default options
 #'
-#' @param path_to_data path to the expected dataset
+#' @param path_to_data path to the expected data folder
 #' @param default_data_path A default file path to use for dataset location
 #' @param file_name the name of the file being considered
 #' @param data_file_type the default file type to use if missing an extension
@@ -161,7 +158,7 @@ update_list_of_datasets <- function(yaml_data_as_list,
 #' @export
 #'
 #' @examples
-#' update_data_path_with_name("./test_data.sql", "./data", "test_data", "parquet")
+#' update_data_path_with_name("raw_data", "./data", "test_data.sql", "parquet")
 update_data_path_with_name <- function(path_to_data,
                                        default_data_path,
                                        file_name,
@@ -179,7 +176,7 @@ update_data_path_with_name <- function(path_to_data,
 
 #' Turns a vector of path components into a complete file path
 #'
-#' @param vector_of_path_components
+#' @param vector_of_path_components vector where each entry is part of path
 #'
 #' @return string of completed file path
 #' @export
@@ -224,6 +221,52 @@ fill_list_default_paths <- function(
 ############################
 # Project yaml handling
 ############################
+
+#' Cleans yaml names by removed redundant Folder and name portions
+#'
+#' @param yaml_names a vector of name entries from a flattened list
+#'
+#' @return Names cleaned to remove uninformative portions of flattened names
+#' @export
+#'
+#' @examples
+#' clean_yaml_names(c("Folders.other.name", "Folders.logs.name"))
+clean_yaml_names <- function(yaml_names){
+ cleaned_yaml_names <- stringr::str_replace_all(
+   yaml_names,
+   "((?:Folders.)|(?:.name$))",
+   ""
+ )
+ return(cleaned_yaml_names)
+}
+
+#' Turn's yaml name entries into matching file paths split on '.'
+#'
+#' @param clean_folder_names a vector of names for the folder entries in list
+#' @param default_path default path to add to relative folder path entry
+#'
+#' @return a vector of file paths for each folder
+#' @export
+#'
+#' @examples
+#' extract_file_paths_from_names(c("other", "logs.test", "data.raw_data"), ".")
+extract_file_paths_from_names <- function(clean_folder_names, default_path){
+  # split out the sub-components from the names and turn into file path
+  split_entries_for_path <- stringr::str_split(clean_folder_names, "\\.")
+
+  # Define a reduction to a full path entry
+  default_path_collapser <- function(vector_of_path_parts) {
+    collapsing_file_path(c(default_path, vector_of_path_parts))
+  }
+
+  # Process all of the file names
+  project_folder_path_entries <- lapply(split_entries_for_path,
+                                        default_path_collapser)
+
+  return(project_folder_path_entries)
+}
+
+
 #' Processes a folder layout yaml to get paths to each directory
 #'
 #' @param yaml_data_as_list list containing data from loading yaml file
@@ -247,24 +290,17 @@ prepare_folder_structure_yaml <- function(
     stringr::str_detect(names(flattened_project_yaml), "Folders")
   ]
 
-  flattened_yaml_names <- names(flattened_project_yaml)
-
-  names(flattened_project_yaml) <-
-    stringr::str_replace_all(
-      flattened_yaml_names,
-      "((?:Folders.)|(?:.name$))",
-      ""
-    )
+  # Clean up the yaml files names
+  names(flattened_project_yaml) <- clean_yaml_names(
+    names(flattened_project_yaml)
+  )
 
   flattened_yaml_names <- names(flattened_project_yaml)
 
-  # split out the sub-components from the names and turn into file path
-  split_entries_for_path <- stringr::str_split(flattened_yaml_names, "\\.")
-  default_path_collapser <- function(x) {
-    collapsing_file_path(c(default_directory, x))
-  }
-  project_folder_path_entries <- lapply(split_entries_for_path,
-                                        default_path_collapser)
+  # Extract paths from entry names
+  project_folder_path_entries <- extract_file_paths_from_names(
+    flattened_yaml_names, default_directory
+  )
   # Note, list entrys has the name for each folder
   names(project_folder_path_entries) <- unlist(unname(flattened_project_yaml))
 
@@ -440,7 +476,10 @@ update_online_list_of_datasets <- function(yaml_data_as_list) {
 #' @export
 #'
 #' @examples
-#' load_and_prepare_yaml_template("./test.yaml")
+#' local_folder_yaml <- here::here("inst", "extdata",
+#'    "project_folder_structure.yaml")
+#' install_default_path <- here::here()
+#' load_and_prepare_yaml_template(local_folder_yaml, install_default_path)
 load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path) {
   # Get the yaml data from the file itself.
   # Note, the R yaml package only download first yaml block

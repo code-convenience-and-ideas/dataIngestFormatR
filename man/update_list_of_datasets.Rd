@@ -18,5 +18,16 @@ a yaml datalist with updated measures
 Updates entries for every dataset in the yaml list
 }
 \examples{
-update_list_of_datasets(list(), function(x) x)
+simple_data_update <- function(dataset_block, dataset_defaults) {
+  dataset_block$default <- "test_value"
+  return(dataset_block)
+}
+test_yaml <- list(
+  "default_script_path" = ".",
+  "datasets_to_load" = list(
+    list("name" = "dataset_one"),
+    list("name" = "dataset_two")
+  )
+ )
+update_list_of_datasets(test_yaml, simple_data_update)
 }
