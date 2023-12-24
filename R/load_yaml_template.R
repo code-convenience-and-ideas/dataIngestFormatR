@@ -74,14 +74,17 @@ process_non_path_entry <- function(entry_name, default_value, dataset_block) {
 #' @examples
 #' # Simple example with a small, generic, yaml dataset
 #' default_path <- file.path("C:", "test")
-#' simple_data_update <- function(x) {x$test <- "value"; return(x)}
+#' simple_data_update <- function(x) {
+#'   x$test <- "value"
+#'   return(x)
+#' }
 #' test_yaml <- list(
 #'   "default_script_path" = NULL,
 #'   "datasets_to_load" = list(
 #'     list("name" = "dataset_one"),
 #'     list("name" = "dataset_two")
 #'   )
-#'  )
+#' )
 #' prepare_dataset_yaml(test_yaml, default_path, simple_data_update)
 prepare_dataset_yaml <- function(yaml_data_as_list,
                                  default_path,
@@ -121,7 +124,7 @@ prepare_dataset_yaml <- function(yaml_data_as_list,
 #'     list("name" = "dataset_one"),
 #'     list("name" = "dataset_two")
 #'   )
-#'  )
+#' )
 #' update_list_of_datasets(test_yaml, simple_data_update)
 update_list_of_datasets <- function(yaml_data_as_list,
                                     individual_dataset_processor) {
@@ -163,8 +166,10 @@ update_data_path_with_name <- function(path_to_data,
                                        default_data_path,
                                        file_name,
                                        data_file_type) {
-  data_path_defaulted <- expand_dataset_path_to_file(path_to_data,
-                                                     default_data_path)
+  data_path_defaulted <- expand_dataset_path_to_file(
+    path_to_data,
+    default_data_path
+  )
 
   if (!extension_exists(data_path_defaulted)) {
     default_dataset_name <- replace_file_extension(file_name, data_file_type)
@@ -184,8 +189,10 @@ update_data_path_with_name <- function(path_to_data,
 #' @examples
 #' collapsing_file_path(c("a", "b", "c"))
 collapsing_file_path <- function(vector_of_path_components) {
-  new_combined_file_path <- Reduce(file.path,
-                                   as.list(vector_of_path_components))
+  new_combined_file_path <- Reduce(
+    file.path,
+    as.list(vector_of_path_components)
+  )
   return(new_combined_file_path)
 }
 
@@ -231,13 +238,13 @@ fill_list_default_paths <- function(
 #'
 #' @examples
 #' clean_yaml_names(c("Folders.other.name", "Folders.logs.name"))
-clean_yaml_names <- function(yaml_names){
- cleaned_yaml_names <- stringr::str_replace_all(
-   yaml_names,
-   "((?:Folders.)|(?:.name$))",
-   ""
- )
- return(cleaned_yaml_names)
+clean_yaml_names <- function(yaml_names) {
+  cleaned_yaml_names <- stringr::str_replace_all(
+    yaml_names,
+    "((?:Folders.)|(?:.name$))",
+    ""
+  )
+  return(cleaned_yaml_names)
 }
 
 #' Turn's yaml name entries into matching file paths split on '.'
@@ -250,7 +257,7 @@ clean_yaml_names <- function(yaml_names){
 #'
 #' @examples
 #' extract_file_paths_from_names(c("other", "logs.test", "data.raw_data"), ".")
-extract_file_paths_from_names <- function(clean_folder_names, default_path){
+extract_file_paths_from_names <- function(clean_folder_names, default_path) {
   # split out the sub-components from the names and turn into file path
   split_entries_for_path <- stringr::str_split(clean_folder_names, "\\.")
 
@@ -260,8 +267,10 @@ extract_file_paths_from_names <- function(clean_folder_names, default_path){
   }
 
   # Process all of the file names
-  project_folder_path_entries <- lapply(split_entries_for_path,
-                                        default_path_collapser)
+  project_folder_path_entries <- lapply(
+    split_entries_for_path,
+    default_path_collapser
+  )
 
   return(project_folder_path_entries)
 }
@@ -276,12 +285,13 @@ extract_file_paths_from_names <- function(clean_folder_names, default_path){
 #' @export
 #'
 #' @examples
-#' prepare_folder_structure_yaml(list("Folders" =
-#' list(list("data" = list("name" = "data_dir")))), ".")
+#' prepare_folder_structure_yaml(list(
+#'   "Folders" =
+#'     list(list("data" = list("name" = "data_dir")))
+#' ), ".")
 prepare_folder_structure_yaml <- function(
-  yaml_data_as_list,
-  default_directory
-) {
+    yaml_data_as_list,
+    default_directory) {
   # Flatten the yaml and it also concatenates the nexsted folder names
   flattened_project_yaml <- rlist::list.flatten(yaml_data_as_list)
 
@@ -321,7 +331,7 @@ prepare_folder_structure_yaml <- function(
 #' @examples
 #' \dontrun{
 #' update_execution_dataset_entry(list(), list())
-#'
+#' }
 update_execution_dataset_entry <- function(dataset_block, current_defaults) {
   # Put out some useful sub-components
   non_path_default_names <- names(current_defaults)[
@@ -369,8 +379,10 @@ update_execution_dataset_entry <- function(dataset_block, current_defaults) {
 #' }
 update_exec_dataset_list <- function(yaml_data_as_list) {
   # process dataset to update blocks
-  yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
-                                               update_execution_dataset_entry)
+  yaml_data_as_list <- update_list_of_datasets(
+    yaml_data_as_list,
+    update_execution_dataset_entry
+  )
 
   # Return the overral thing
   return(yaml_data_as_list)
@@ -392,7 +404,6 @@ update_exec_dataset_list <- function(yaml_data_as_list) {
 #' update_disk_dataset_entry(list(), list())
 #' }
 update_disk_dataset_entry <- function(dataset_block, current_defaults) {
-
   # Data path now
   dataset_block[["data_path"]] <- expand_dataset_path_to_file(
     dataset_block[["data_path"]],
@@ -415,8 +426,10 @@ update_disk_dataset_entry <- function(dataset_block, current_defaults) {
 #' }
 update_disk_list_of_datasets <- function(yaml_data_as_list) {
   # process dataset to update blocks
-  yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
-                                               update_disk_dataset_entry)
+  yaml_data_as_list <- update_list_of_datasets(
+    yaml_data_as_list,
+    update_disk_dataset_entry
+  )
 
   # Return the overral thing
   return(yaml_data_as_list)
@@ -438,7 +451,6 @@ update_disk_list_of_datasets <- function(yaml_data_as_list) {
 #' update_online_dataset_entry(list(), list())
 #' }
 update_online_dataset_entry <- function(dataset_block, current_defaults) {
-
   # Get online file name from website link
   online_file_base_name <- basename(dataset_block[["web_link"]])
   print(dataset_block[["web_link"]])
@@ -469,8 +481,10 @@ update_online_dataset_entry <- function(dataset_block, current_defaults) {
 #' }
 update_online_list_of_datasets <- function(yaml_data_as_list) {
   # process dataset to update blocks
-  yaml_data_as_list <- update_list_of_datasets(yaml_data_as_list,
-                                               update_online_dataset_entry)
+  yaml_data_as_list <- update_list_of_datasets(
+    yaml_data_as_list,
+    update_online_dataset_entry
+  )
 
   # Return the overral thing
   return(yaml_data_as_list)
@@ -489,7 +503,8 @@ update_online_list_of_datasets <- function(yaml_data_as_list) {
 #'
 #' @examples
 #' local_folder_yaml <- system.file("extdata", "project_folder_structure.yaml",
-#'  package = "dataIngestFormatR")
+#'   package = "dataIngestFormatR"
+#' )
 #' install_default_path <- here::here()
 #' load_and_prepare_yaml_template(local_folder_yaml, install_default_path)
 load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path) {
@@ -502,20 +517,28 @@ load_and_prepare_yaml_template <- function(path_to_yaml_file, default_path) {
 
   # Switch through and pick the appropriate processor for the data
   if (current_yaml_block == "project_structure") {
-    yaml_results <- prepare_folder_structure_yaml(yaml_data_as_list,
-                                                  default_path)
+    yaml_results <- prepare_folder_structure_yaml(
+      yaml_data_as_list,
+      default_path
+    )
   } else if (current_yaml_block == "remote_execution_data") {
-    yaml_results <- prepare_dataset_yaml(yaml_data_as_list,
-                                         default_path,
-                                         update_exec_dataset_list)
+    yaml_results <- prepare_dataset_yaml(
+      yaml_data_as_list,
+      default_path,
+      update_exec_dataset_list
+    )
   } else if (current_yaml_block == "data_from_disk") {
-    yaml_results <- prepare_dataset_yaml(yaml_data_as_list,
-                                         default_path,
-                                         update_disk_list_of_datasets)
+    yaml_results <- prepare_dataset_yaml(
+      yaml_data_as_list,
+      default_path,
+      update_disk_list_of_datasets
+    )
   } else if (current_yaml_block == "data_from_online") {
-    yaml_results <- prepare_dataset_yaml(yaml_data_as_list,
-                                         default_path,
-                                         update_online_list_of_datasets)
+    yaml_results <- prepare_dataset_yaml(
+      yaml_data_as_list,
+      default_path,
+      update_online_list_of_datasets
+    )
   } else {
     # Raises error, only defined types covered above
   }
