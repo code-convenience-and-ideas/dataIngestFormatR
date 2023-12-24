@@ -65,13 +65,78 @@
     <dl><dt>path_to_yaml_file</dt>
 <dd><p>string with path to yaml file</p></dd>
 
+
+<dt>default_path</dt>
+<dd><p>an overall default path to use</p></dd>
+
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>a fulled prepared yaml dataset</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">load_and_prepare_yaml_template</span><span class="op">(</span><span class="st">"./test.yaml"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot open file './test.yaml': No such file or directory</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in file(file, "rt", encoding = fileEncoding):</span> cannot open the connection</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">local_folder_yaml</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"project_folder_structure.yaml"</span>,</span></span>
+<span class="r-in"><span> package <span class="op">=</span> <span class="st">"dataIngestFormatR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">install_default_path</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">load_and_prepare_yaml_template</span><span class="op">(</span><span class="va">local_folder_yaml</span>, <span class="va">install_default_path</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/data"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $manual_data_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/data/manual_data"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $processed_data_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/data/processed_data"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $raw_data_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/data/raw_data"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $summary_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/data/summaries_reports_synthesized_data"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $script_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/scripts"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $r_script_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/scripts/r"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $python_script_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/scripts/python"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $sql_script_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/scripts/sql"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $other_script_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/scripts/other"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $models_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/models"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $communications_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/communications"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $other_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/other"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $documentation_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/documentation"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $figures_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/figures"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $logs_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/logs"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $reports_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/reports"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $apps_dir</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/dataIngestFormatR/dataIngestFormatR/apps"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
